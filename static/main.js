@@ -50,7 +50,7 @@ function getStatus() {
 }
 
 $(function() {
-    //setInterval(getStatus, 1000);
+    setInterval(getStatus, 1000);
     $("#irrigate").on("click", irrigate);
 });
 
