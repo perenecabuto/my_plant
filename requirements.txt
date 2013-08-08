@@ -1,0 +1,4 @@
+Flask==0.10.1
+
+# I have used Debian's python-bluez package
+PyBluez==0.18
