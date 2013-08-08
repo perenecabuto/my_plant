@@ -10,8 +10,12 @@ function irrigate() {
     });
 }
 
+function showServerError() {
+    $("#status").text('SERVER ERROR').attr('class', 'label label-danger');
+}
+
 function getStatus() {
-    $.getJSON(statusURL, function(data) {
+    $.getJSON(statusURL).done(function(data) {
         $("#humidity").text('--').attr('class', 'progress-bar');
         $("#status").text('--').attr('class', 'label');
 
@@ -40,13 +44,13 @@ function getStatus() {
 
             $("#status").text(data.status).addClass(labelClass);
         } else {
-            $("#status").text('SERVER ERROR').addClass('label-danger');
+            showServerError();
         }
-    });
+    }).fail(showServerError);
 }
 
 $(function() {
-    setInterval(getStatus, 1000);
+    //setInterval(getStatus, 1000);
     $("#irrigate").on("click", irrigate);
 });
 
