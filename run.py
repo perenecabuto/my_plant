@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from actions import app
+from subprocess import call
+
+pin = '1234'
+
+
+if __name__ == "__main__":
+    call(['bluetooth-agent', pin], stdout=None)
+    app.debug = True
+    app.run('0.0.0.0')
+
+    if app.sock:
+        app.sock.close()

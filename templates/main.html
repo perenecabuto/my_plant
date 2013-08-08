@@ -1,0 +1,27 @@
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    <script src="{{ url_for('static', filename='jquery-1.10.2.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+    var statusURL = "{{ url_for('status') }}",
+        irrigationURL = "{{ url_for('irrigate') }}";
+    </script>
+    <script src="{{ url_for('static', filename='main.js') }}" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="thumbnail" style="width: 300px; overflow: hidden; margin: 10px">
+        <strong>humidity:</strong>
+        <div class="progress">
+            <div id="humidity" class="progress-bar progress-bar-info">--</div>
+        </div>
+
+        <p>
+            <strong>pump status:</strong>
+            <span id="status" class="label label-info" style="width: 100px; display: inline-block">--</span>
+        </p>
+
+        <button id="irrigate" class="btn pull-right">irrigar</button>
+    </div>
+</body>
+</html>
