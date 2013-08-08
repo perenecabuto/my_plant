@@ -46,6 +46,10 @@ def irrigate():
 def status():
     sock = get_sock()
     line = sock.recv(1024)
+
+    while '\n' not in line:
+        line = sock.recv(1024)
+
     line = line.split('\n')[-2].strip()
     #sock.close()
 
