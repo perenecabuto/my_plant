@@ -8,7 +8,7 @@ pin = '1234'
 
 
 if __name__ == "__main__":
-    call(['bluetooth-agent', pin], stdout=None)
+    call(['bluetooth-agent %s &' % pin], shell=True)
     app.debug = True
     app.run('0.0.0.0')
 
