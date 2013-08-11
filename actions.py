@@ -5,8 +5,11 @@ import json
 import bluetooth
 from flask import Flask, render_template
 
+from proxy import ReverseProxied
+
 
 app = Flask(__name__)
+app.wsgi_app = ReverseProxied(app.wsgi_app)
 
 MAX_HUMIDY = 1023
 IDLE = 'IDLE'
