@@ -28,7 +28,7 @@ def main():
 @app.route('/irrigate')
 def irrigate():
     with conn as sock:
-        sock.recv(1)
+        sock.flush()
         sock.send('i')
 
     return "true"
