@@ -72,4 +72,4 @@ def restart():
         with prefix('workon ' + app_name):
             run('nohup bluetooth-agent %s &' % bluetooth_pin)
             run('uwsgi --stop %s; true' % pidfile_path)
-            run('uwsgi -p 2 --log-master --daemonize --chmod-socket=666 -s %s --pidfile %s -w actions:app --logto /var/log/myplant-error.log --logto2 /var/log/myplant.log' % (sockfile_path, pidfile_path))
+            run('uwsgi --daemonize --chmod-socket=666 -s %s --pidfile %s -w actions:app --log-master --logto /var/log/myplant-error.log --logto2 /var/log/myplant.log' % (sockfile_path, pidfile_path))
