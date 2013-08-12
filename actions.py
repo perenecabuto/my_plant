@@ -4,7 +4,7 @@ import json
 
 from flask import Flask, render_template
 
-from driver import BluetoothConn
+import driver
 
 app = Flask(__name__)
 
@@ -16,7 +16,8 @@ WORKING = 'WORKING'
 current_status = IDLE
 
 addr = '00:15:FF:F2:11:2B'
-conn = BluetoothConn(addr)
+conn = driver.BluetoothConn(addr)
+driver.logger = app.logger
 
 
 @app.route('/')

@@ -2,6 +2,10 @@
 
 import bluetooth
 import traceback
+import logging
+
+
+logger = logging.getLogger()
 
 
 class BluetoothConn(object):
@@ -27,6 +31,8 @@ class BluetoothConn(object):
     def get_sock(self, attempt=0):
         if attempt > self.MAX_ATTEMPTS:
             raise BluetoothConnError('Max connection attempts reached!')
+        elif attempt > 0:
+            logger.warn('CONNECTION ERROR: Trying to connect to %s again (attemp %s)' % (self.addr, attempt))
 
         sock = bluetooth.BluetoothSocket()
 
