@@ -70,6 +70,6 @@ def copy_data():
 def restart():
     with cd(current_dir):
         with prefix('workon ' + app_name):
-            run('bluetooth-agent %s &' % bluetooth_pin)
+            run('nohup bluetooth-agent %s &' % bluetooth_pin)
             run('uwsgi --stop %s; true' % pidfile_path)
-            run('uwsgi --log-master --daemonize --chmod-socket=666 -s %s --pidfile %s -w actions:app --logto2 /var/log/myplant.log' % (sockfile_path, pidfile_path))
+            run('uwsgi -w 2 -p 2 --log-master --daemonize --chmod-socket=666 -s %s --pidfile %s -w actions:app --logto2 /var/log/myplant.log' % (sockfile_path, pidfile_path))

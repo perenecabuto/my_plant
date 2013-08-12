@@ -2,8 +2,9 @@
 
 import json
 
-import bluetooth
 from flask import Flask, render_template
+
+from driver import BluetoothConn
 
 app = Flask(__name__)
 
@@ -13,17 +14,9 @@ IDLE = 'IDLE'
 WORKING = 'WORKING'
 
 current_status = IDLE
+
 addr = '00:15:FF:F2:11:2B'
-
-app.sock = None
-
-
-def get_sock():
-    if not app.sock:
-        app.sock = bluetooth.BluetoothSocket()
-        app.sock.connect((addr, 1))
-
-    return app.sock
+conn = BluetoothConn(addr)
 
 
 @app.route('/')
@@ -33,25 +26,21 @@ def main():
 
 @app.route('/irrigate')
 def irrigate():
-    sock = get_sock()
-    sock.send('i')
-    #sock.close()
+    with conn as sock:
+        sock.send('i')
 
-    response = True
-
-    return json.dumps(response)
+    return "true"
 
 
 @app.route('/status')
 def status():
-    sock = get_sock()
-    line = sock.recv(1024)
+    line = ''
 
-    while '\n' not in line:
-        line = sock.recv(1024)
+    with conn as sock:
+        while '\n' not in line:
+            line = sock.recv(1024)
 
     line = line.split('\n')[-2].strip()
-    #sock.close()
 
     humidity, status = line.split(',')
     humidity = int(humidity)
@@ -64,4 +53,3 @@ def status():
     }
 
     return json.dumps(response)
-

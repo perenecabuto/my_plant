@@ -11,6 +11,3 @@ if __name__ == "__main__":
     call(['bluetooth-agent %s &' % pin], shell=True)
     app.debug = True
     app.run('0.0.0.0')
-
-    if app.sock:
-        app.sock.close()
