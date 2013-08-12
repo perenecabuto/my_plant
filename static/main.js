@@ -1,23 +1,33 @@
 var statusURL = "/status",
     irrigationURL = "/irrigate";
 
-function irrigate() {
+function irrigate(attempt) {
+    attempt = attempt || 0;
+
     $('#irrigate').attr('disabled', true);
 
     $.ajax({
         url: irrigationURL,
-        error: function () { irrigate(); }
+        error: function () {
+            setStatusLabel('IRRIGATION ERROR: trying again (' + (++attempt) + ')');
+            setTimeout(function() { irrigate(attempt) }, 500);
+        }
     });
 }
 
 function showServerError() {
-    $("#status").text('SERVER ERROR').attr('class', 'label label-danger');
+    setStatusLabel('SERVER ERROR', 'label-danger);
+}
+
+function setStatusLabel(value, extraclass) {
+    extraclass = extraclass || ''
+    $("#status").text(value).attr('class', 'label ' + extraclass);
 }
 
 function getStatus() {
     $.getJSON(statusURL).done(function(data) {
         $("#humidity").text('--').attr('class', 'progress-bar');
-        $("#status").text('--').attr('class', 'label');
+        setStatusLabel('--');
 
         if (data.humidity && data.humidity.value) {
             var percent = data.humidity.percent + "%",
@@ -47,7 +57,7 @@ function getStatus() {
                 $('#irrigate').attr('disabled', false)
             }
 
-            $("#status").text(data.status).addClass(labelClass);
+            setStatusLabel(data.status, labelClass);
         } else {
             showServerError();
         }
