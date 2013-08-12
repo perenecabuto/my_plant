@@ -9,18 +9,18 @@ function irrigate(attempt) {
     $.ajax({
         url: irrigationURL,
         error: function () {
-            setStatusLabel('IRRIGATION ERROR: trying again (' + (++attempt) + ')');
+            setStatusLabel('IRRIGATION ERROR: trying again (' + (++attempt) + ')', 'label-danger');
             setTimeout(function() { irrigate(attempt) }, 500);
         }
     });
 }
 
 function showServerError() {
-    setStatusLabel('SERVER ERROR', 'label-danger);
+    setStatusLabel('SERVER ERROR', 'label-danger');
 }
 
 function setStatusLabel(value, extraclass) {
-    extraclass = extraclass || ''
+    extraclass = extraclass || '';
     $("#status").text(value).attr('class', 'label ' + extraclass);
 }
 
