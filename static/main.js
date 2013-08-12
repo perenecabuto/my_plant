@@ -20,14 +20,19 @@ function getStatus() {
         $("#status").text('--').attr('class', 'label');
 
         if (data.humidity && data.humidity.value) {
-            var labelClass = 'progress-bar-danger',
-                percent = data.humidity.percent + "%",
+            var percent = data.humidity.percent + "%",
                 text = percent + " (" + data.humidity.value + ")";
 
-            if (data.humidity.percent >= 70) {
-                labelClass = 'progress-bar-success';
-            } else if (data.humidity.percent >= 50) {
-                labelClass = 'progress-bar-warning';
+                wetClass = 'progress-bar-info',
+                warnClass = 'progress-bar-warning',
+                dryClass = 'progress-bar-danger';
+
+                labelClass = 'progress-bar-danger'
+
+            if (data.humidity.percent >= 75) {
+                labelClass = wetClass;
+            } else if (data.humidity.percent >= 61) {
+                labelClass = warnClass;
             }
 
             $("#humidity").css('width', percent).addClass(labelClass).text(text);
