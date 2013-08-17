@@ -40,6 +40,7 @@ def status():
 
     with conn as sock:
         while '\n' not in line:
+            sock.send('')
             line = sock.recv(1024)
 
     line = line.split('\n')[-2].strip()

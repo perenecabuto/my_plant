@@ -36,6 +36,10 @@ class BluetoothConn(object):
 
         sock = bluetooth.BluetoothSocket()
 
+        # see "setblocking(self, blocking)"
+        # http://pybluez.googlecode.com/svn/www/docs-0.7/public/bluetooth.BluetoothSocket-class.html#setblocking
+        sock.setblocking(False)
+
         try:
             sock.connect((self.addr, 1))
         except bluetooth.BluetoothError:
